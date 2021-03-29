@@ -1,13 +1,13 @@
+import React from "react";
 
-import './App.css';
-import { Survey } from './component/Survey';
-
+import LandingPage from "./Component/Landingpage/LandingPage";
+import Container from "@material-ui/core/Container";
 
 function App() {
   return (
-    <div className="App">
-  <Survey/>
-    </div>
+    <Container maxWidth="lg">
+      <LandingPage />
+    </Container>
   );
 }
 

@@ -4,16 +4,20 @@ class Api::UsersController < ApplicationController
   end
 
   def user_params
-    params.required(:user).permit(:name, :password)
+    params.required(:user).permit(:name, :password, :email)
   end
 
-  def create
-    user = User.create(user_params)
+  def create   #http://localhost:3000/api/users
+    user = User.create(name: params[:name], email: params[:email], password: params[:password])
     if user.valid?
-      render json: user, status: 201
+      render json: {message: 'Successfully created user'}, status: 200
     else
-      render json: { message: 'unable to create a user' }, status: 500
+      render json: {message: 'Unable to create user'}, status: 400
     end
+  end
+
+  def show
+    render json: User.find(params[:id])
   end
 def update
     render json: User.find(params[:id]).update(user_params)
