@@ -54,9 +54,9 @@ const LandingPage = () => {
               color="inherit"
               aria-label="menu"
             ></IconButton>
-            <Typography variant="h9" className={classes.title}>
+            {/* <Typography variant="h9" className={classes.title}>
               Welcome {user.name}
-            </Typography>
+            </Typography> */}
 
             {!userLoggedIn && (
               <Link to="/login">
@@ -84,7 +84,9 @@ const LandingPage = () => {
                 user={user}
               />
             </Route>
+            <Route path="/task/:id"></Route>
             <Route path="/"> {userLoggedIn && <Welcome />}</Route>
+          
           </Switch>
         </div>
       </div>
