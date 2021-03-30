@@ -10,7 +10,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 function AddTask(props) {
   const history = useHistory();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [formState, setFormState] = useState({
     name: "",
     status: "",
@@ -33,7 +33,7 @@ function AddTask(props) {
     const newTasks = { ...formState };
 
     setFormState(newTasks);
-    fetch("http://localhost:3000/api/todo/add", {
+    fetch("/api/todos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,24 +45,24 @@ function AddTask(props) {
       history.replace("/");
     });
   };
-  useEffect((projectName) => {
-    fetch("http://localhost:3000/api/project/all", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        console.log("Task respond: ", response);
-        return response.json();
-      })
-      .then((dropdown, i) => {
-        console.log("dropdownData:", dropdown);
+  // useEffect((projectName) => {
+  //   fetch("http://localhost:3000/api/project/all", {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   })
+  //     .then((response) => {
+  //       console.log("Task respond: ", response);
+  //       return response.json();
+  //     })
+  //     .then((dropdown, i) => {
+  //       console.log("dropdownData:", dropdown);
 
-        setProjects(dropdown);
-        setOpen(true);
-      });
-  }, []);
+  //       setProjects(dropdown);
+  //       setOpen(true);
+  //     });
+  // }, []);
 
   const handleChange = (e) => {
     const newState = { ...formState };

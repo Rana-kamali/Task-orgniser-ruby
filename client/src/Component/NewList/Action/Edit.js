@@ -18,12 +18,10 @@ const Edit = (props) => {
     projectId: "",
   });
 
- 
-
   const handleSubmit = (e) => {
     console.log("submit button click");
     e.preventDefault();
-    fetch(`http://localhost:3000/api/todo/update/${formState._id}`, {
+    fetch(`/api/todos/${formState.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +46,7 @@ const Edit = (props) => {
     console.log("props id: ", props.showEdit);
     console.log("use effect");
     console.log("form data", formState);
-    fetch(`http://localhost:3000/api/todo/${props.showEdit}`, {
+    fetch(`/api/todos/${props.showEdit}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -80,7 +78,7 @@ const Edit = (props) => {
 
     <div className="modal">
       <Container maxWidth="sm">
-      <Modal show={props.showEdit} onHide={handleClose}>
+      <Modal show={props.showEdit ? true : false} onHide={handleClose}>
         <Modal.Header>
           <Modal.Title>please edit your task</Modal.Title>
         </Modal.Header>
@@ -137,7 +135,6 @@ const Edit = (props) => {
           value={formState.comment}
           onChange={handleChange}
         />
-        
         
         </Modal.Body>
         <Modal.Footer>

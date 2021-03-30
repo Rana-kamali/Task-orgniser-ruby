@@ -10,6 +10,7 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import EditIcon from "@material-ui/icons/Edit";
 import TextField from "@material-ui/core/TextField";
 import Edit from "./Action/Edit";
+import { useParams } from "react-router";
 
 const useStyles = makeStyles({
   table: {
@@ -23,9 +24,9 @@ const TaskTable = (props) => {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
   // const [open, setOpen] = React.useState(false);
-
+const [todos, setTodos]= useState([]);
   useEffect(() => {
-    fetch("http://localhost:3000/api/project/all", {
+    fetch("/api/todos", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -36,9 +37,11 @@ const TaskTable = (props) => {
         return response.json();
       })
       .then((dropdown, i) => {
-        setProjects(dropdown);
+        setTodos(dropdown);
       });
   }, []);
+
+
 
   const classes = useStyles();
   const [list, setList] = useState({
@@ -69,6 +72,7 @@ const TaskTable = (props) => {
     setTasks(props.tasks);
   }, [props.tasks]);
 
+ 
   const handleEdit = (id) => {
     console.log("id: ", id);
     setShowEdit(id);
@@ -77,7 +81,7 @@ const TaskTable = (props) => {
   const handleDelete = (id) => {
     console.log("id: ", id);
     setShowDelete(id);
-    fetch(`http://localhost:3000/api/todo/delete/${id}`, {
+    fetch(`/api/todos/${id}`, {
       method: "Delete",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +112,7 @@ const TaskTable = (props) => {
             </TableRow>
           </TableHead>
           <TableBody></TableBody>
-          {tasks.map((el) => {
+          {todos.map((el) => {
             return (
               <TableRow>
                 <TableCell component="th" scope="row"></TableCell>
@@ -144,14 +148,14 @@ const TaskTable = (props) => {
                 <TableCell name="edit" align="right">
                   <EditIcon
                     onClick={() => {
-                      handleEdit(el._id);
+                      handleEdit(el.id);
                     }}
                   />
                 </TableCell>
                 <TableCell name="delete" align="right" type="submit">
                   <DeleteForeverIcon
                     onClick={() => {
-                      handleDelete(el._id);
+                      handleDelete(el.id);
                     }}
                   />
                 </TableCell>
