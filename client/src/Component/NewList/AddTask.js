@@ -31,12 +31,13 @@ function AddTask(props) {
     };
     console.log("form state", formState);
     const newTasks = { ...formState };
-
+    const auth_token = window.localStorage.getItem('token');
     setFormState(newTasks);
     fetch("/api/todos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "authorization": `Bearer ${auth_token}`
       },
       body: JSON.stringify(newTasks),
     }).then((response) => {

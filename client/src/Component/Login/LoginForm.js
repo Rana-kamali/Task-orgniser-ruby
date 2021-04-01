@@ -1,12 +1,45 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 
-function LoginForm({ Login, error }) {
+function LoginForm(props) {
+  const history = useHistory();
   const [details, setDetails] = useState({ name: "", email: "", password: "" });
+  const [error, setError] = useState("");
+
+
+
   const submitHandler = (e) => {
     e.preventDefault();
-    Login(details);
+    console.log("submit handler", e)
+    fetch('/api/auth/login',{
+      method: "POST",
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body: JSON.stringify(details)
+    }).then(response => {
+      if (response.status !== 200) { 
+      console.log("Details not match");
+      setError("Details not match");
+        return;
+      }
+          props.setUser({
+        name: details.name,
+        email: details.email,
+      });
+      props.setUserLoggedIn(true);
+            window.localStorage.setItem("userLoggedin", true);
+      history.replace("/");
+      return response.json();
+    })
+    .then(data => {
+      console.log("data", data)
+      if (data && data.token) { 
+        window.localStorage.setItem('token', data.token);
+      }
+    })
   };
 
   return (

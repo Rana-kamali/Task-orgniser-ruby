@@ -17,6 +17,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 // import Button from '@material-ui/core/Button';
 import IconButton from "@material-ui/core/IconButton";
+import LoginForm from "../Login/LoginForm"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -78,11 +79,15 @@ const LandingPage = () => {
         <div className="landing">
           <Switch>
             <Route path="/login">
-              <LoginApp
+              {/* <LoginApp
                 setUserLoggedIn={setUserLoggedIn}
                 setUser={setUser}
                 user={user}
-              />
+              /> */}
+              <LoginForm
+                setUserLoggedIn={setUserLoggedIn}
+                setUser={setUser}
+                user={user} />
             </Route>
             <Route path="/task/:id"></Route>
             <Route path="/"> {userLoggedIn && <Welcome />}</Route>
